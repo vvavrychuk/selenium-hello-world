@@ -1,0 +1,14 @@
+# Based on https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+
+# User-specific stuff:
+.idea/workspace.xml
+.idea/vcs.xml
+
+# Sensitive or high-churn files:
+.idea/uiDesigner.xml
+
+
+# Maven
+.idea/libraries
+target/
+dependency-reduced-pom.xml
