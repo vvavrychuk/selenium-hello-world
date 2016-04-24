@@ -11,15 +11,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-  public static void main(String[] args) throws IOException, InterruptedException {
-    System.out.print("Enter search query: ");
-    String query = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+  private static boolean isHeroku() {
+    return System.getenv("DYNO") != null;
+  }
 
-    ChromeDriverService service = XvfbChromeDriverService.createDefaultService();
+  public static void main(String[] args) throws IOException, InterruptedException {
+    String query;
+    if (args.length == 0) {
+      System.out.print("Enter search query: ");
+      query = (new BufferedReader(new InputStreamReader(System.in))).readLine();
+    } else {
+      query = args[0];
+    }
+
+    ChromeDriverService service;
+    if (isHeroku())
+      service = XvfbChromeDriverService.createDefaultService();
+    else
+      service = ChromeDriverService.createDefaultService();
 
     ChromeOptions options = new ChromeOptions();
-    options.setBinary("/app/.apt/opt/google/chrome/chrome");
-    options.addArguments("--no-sandbox");
+    if (isHeroku()) {
+      options.setBinary("/app/.apt/opt/google/chrome/chrome");
+      options.addArguments("--no-sandbox");
+    }
 
     WebDriver driver = new ChromeDriver(service, options);
     driver.get("http://www.google.com");
