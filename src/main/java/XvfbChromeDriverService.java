@@ -18,7 +18,7 @@ class XvfbChromeDriverService extends ChromeDriverService {
   public static class Builder extends ChromeDriverService.Builder {
     @Override
     protected File findDefaultExecutable() {
-      return findExecutable("chromedriver", "", null, null);
+      return findExecutable("xvfb-run", "dummy", null, null);
     }
 
     @Override
